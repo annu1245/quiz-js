@@ -1,5 +1,6 @@
 const ques_area = document.getElementById("ques_id");
 const next_btn = document.getElementById("next_btn"); 
+const ansOptions = document.getElementById('radioBtn_div');
 
 const obj = [
     {
@@ -20,6 +21,11 @@ const obj = [
     }
 ]
 
+const ansOptns = [["s", "e", "e", "r"], 
+                  ["se", "er", "et", "ro"], 
+                  ["s", "e", "e", "r"], 
+                  ["se", "er", "et", "ro"]]
+
 var count = 0;
 
 function showNextQues(currQuesCount = 0) {
@@ -33,5 +39,31 @@ next_btn.addEventListener("click", function(){
         alert('game over');
     }
     showNextQues(count);
+    showRadioBtn(ansOptns[count]);
 });
 
+function showRadioBtn(dummyOptns = ansOptns[0]) {
+    ansOptions.innerHTML = "";
+    for(let i=0; i<dummyOptns.length; i++){
+        radioBtnValue = dummyOptns[i];
+
+        let radioBtn = document.createElement("input");
+        radioBtn.setAttribute("type","radio");
+        radioBtn.setAttribute("id", `id${i}`);
+        radioBtn.setAttribute("name", "quizAns");
+        radioBtn.setAttribute("value", radioBtnValue);
+
+        let label = document.createElement("label");
+        label.innerText = `${radioBtnValue}\n`;
+        label.setAttribute("for", `id${i}`);
+
+        ansOptions.appendChild(radioBtn);
+        ansOptions.appendChild(label);
+
+    }
+}
+
+window.onload = function() {
+    showNextQues();
+    showRadioBtn();
+}
