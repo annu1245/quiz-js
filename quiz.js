@@ -1,6 +1,8 @@
 const ques_area = document.getElementById("ques_id");
 const next_btn = document.getElementById("next_btn"); 
 const ansOptions = document.getElementById('radioBtn_div');
+const radioBtnData = document.querySelectorAll('input[type="radio"]');
+
 
 const obj = [
     {
@@ -13,17 +15,17 @@ const obj = [
     },
     {
         ques : "third ques",
-        ans : "sec ans"
+        ans : "sec a"
     },
     {
         ques : "fourth ques",
-        ans : "sec ans"
+        ans : "sec as"
     }
 ]
 
-const ansOptns = [["s", "e", "e", "r"], 
+const ansOptns = [["first ans", "e", "e", "r"], 
                   ["se", "er", "et", "ro"], 
-                  ["s", "e", "e", "r"], 
+                  ["s", "e", "sec a", "r"], 
                   ["se", "er", "et", "ro"]]
 
 var count = 0;
@@ -37,13 +39,13 @@ next_btn.addEventListener("click", function(){
     count = count+1;
     if(count >= obj.length){
         alert('game over');
+    }else{
+        getSelectedAns(obj[count].ans, count); 
     }
-    showNextQues(count);
-    showRadioBtn(ansOptns[count]);
+
 });
 
 function showRadioBtn(dummyOptns = ansOptns[0]) {
-    ansOptions.innerHTML = "";
     for(let i=0; i<dummyOptns.length; i++){
         radioBtnValue = dummyOptns[i];
 
@@ -59,9 +61,31 @@ function showRadioBtn(dummyOptns = ansOptns[0]) {
 
         ansOptions.appendChild(radioBtn);
         ansOptions.appendChild(label);
-
     }
 }
+
+
+function getSelectedAns(actualAns, nextCnt){
+    console.log("--------" + radioBtnData);
+    for(const userAns of radioBtnData){
+        if(userAns.checked){
+            if(userAns.value == actualAns){
+                alert("correct");
+                break;
+            }
+        }
+    }
+    clearCard();
+    showNextQues(nextCnt);
+    showRadioBtn(ansOptns[nextCnt]);
+}
+
+function clearCard()
+{
+    document.getElementById('radioBtn_div').innerHTML = "";
+
+}
+
 
 window.onload = function() {
     showNextQues();
